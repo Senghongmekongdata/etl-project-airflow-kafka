@@ -128,4 +128,124 @@ If you have done all the steps till here correctly, the streaming toll data woul
 
 List the top 10 rows in the table livetolldata to see whether you get the right data or not.
 
-***Congratulation***
+***Congratulation for your first project***
+----
+
+<br  />
+
+<br  />
+
+# ***Project 2: Creating ETL Data Pipelines using Apache Airflow***
+
+![download](https://user-images.githubusercontent.com/58208161/182294225-1e490d3c-10b2-46eb-b890-dac7673ee283.png)
+
+
+## Scenario
+You are a data engineer at a data analytics consulting company. You have been assigned to a project that aims to de-congest the national highways by analyzing the road traffic data from different toll plazas. Each highway is operated by a different toll operator with a different IT setup that uses different file formats. Your job is to collect data available in different formats and consolidate it into a single file.
+
+## Objectives
+In this assignment you will author an Apache Airflow DAG that will:
+
+- Extract data from a csv file
+- Extract data from a tsv file
+- Extract data from a fixed width file
+- Transform the data
+- Load the transformed data into the staging area
+
+## Prepare the lab environment
+
+Before you start the assignment:
+
+- Start Apache Airflow.
+- Download the dataset from the source to the destination mentioned below.
+
+> Source:
+```
+https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Final%20Assignment/tolldata.tgz
+```
+
+- Create a directory for staging area (You can create any path in your machine)
+> In here, I create under this path 
+```
+mkdir /home/project/airflow/dags/finalassignment/staging
+```
+
+## Create a DAG
+
+### Task 1.1 - Define DAG arguments
+Define the DAG arguments as per the following details:
+
+![image](https://user-images.githubusercontent.com/58208161/182295022-4d91cca3-a1ef-4b38-b4d3-dfb503589d29.png)
+
+### Task 1.2 - Define the DAG
+Create a DAG as per the following details.
+
+![image](https://user-images.githubusercontent.com/58208161/182295212-1557f473-de36-48b9-b420-b5cb78a79f67.png)
+
+### Task 1.3 - Create a task to unzip data
+Create a task named `unzip_data`.
+
+Use the downloaded data from the url given in the first part of this assignment in exercise 1 and uncompress it into the destination directory.
+
+### Task 1.4 - Create a task to extract data from csv file
+Create a task named `extract_data_from_csv`.
+
+This task should extract the fields `Rowid, Timestamp, Anonymized Vehicle number, and Vehicle type` from the `vehicle-data.csv` file and save them into a file named `csv_data.csv`.
+
+
+### Task 1.5 - Create a task to extract data from tsv file
+Create a task named `extract_data_from_tsv`.
+
+This task should extract the fields Number of axles, Tollplaza id, and Tollplaza code from the tollplaza-data.tsv file and save it into a file named tsv_data.csv.
+
+### Task 1.6 - Create a task to extract data from fixed width file
+Create a task named extract_data_from_fixed_width.
+
+This task should extract the fields Type of Payment code, and Vehicle Code from the fixed width file payment-data.txt and save it into a file named fixed_width_data.csv.
+
+### Task 1.7 - Create a task to consolidate data extracted from previous tasks
+Create a task named consolidate_data.
+
+This task should create a single csv file named extracted_data.csv by combining data from
+
+- csv_data.csv
+- tsv_data.csv
+- fixed_width_data.csv
+- The final csv file should use the fields in the order given below:
+
+`Rowid, Timestamp, Anonymized Vehicle number, Vehicle type, Number of axles, Tollplaza id, Tollplaza code, Type of Payment code, and Vehicle Code`
+
+Hint: Use the bash paste command.
+
+paste command merges lines of files.
+
+Example : paste file1 file2 > newfile
+
+The above command merges the columns of the files file1 and file2 and sends the output to newfile.
+
+You can use the command man paste to explore more.
+
+
+### Task 1.8 - Transform and load the data
+Create a task named transform_data.
+
+This task should transform the vehicle_type field in extracted_data.csv into capital letters and save it into a file named transformed_data.csv in the staging directory. 
+
+### Task 1.9 - Define the task pipeline
+Define the task pipeline as per the details given below:
+
+![image](https://user-images.githubusercontent.com/58208161/182296038-5f7b8140-4ea8-4283-87a1-00974db468c5.png)
+
+
+## Getting the DAG operational
+Save the DAG you defined into a file named `ETL_toll_data.py`.
+
+### Task 1.10 - Submit the DAG
+
+### Task 1.11 - Unpause the DAG
+
+### Task 1.12 - Monitor the DAG
+
+**Congratuation for your second project**
+
+> Credit by Coursera
